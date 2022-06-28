@@ -16,14 +16,22 @@ def success(name):
 #       user = request.args.get('nm')
 #       return redirect(url_for('success',name = user))
 
+@app.route('/student')
+def student():
+   return render_template('student.html')
+
 
       
 @app.route('/hello/<int:score>')
 def hello_name(score):
    return render_template('hello.html', marks = score)
 
-@app.route('/result')
+@app.route('/result',methods = ['POST', 'GET'])
 def result():
+   if request.method =='POST':
+      result = request.form
+      return render_template("result.html",result = result)
+      
    dict = {'phy':50,'che':60,'maths':70}
    return render_template('result.html', result = dict)
 
@@ -47,5 +55,3 @@ def getcookie():
    name = request.cookies.get('userID')
    return '<h1>welcome '+name+'</h1>'
 
-if __name__=="__main__":
-    app.run();
